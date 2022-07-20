@@ -24,6 +24,17 @@ def image() -> None:
     plt.tight_layout()
     plt.show()
 
+    return None
+
+def basic_thresh() -> None:
+    img = cv.imread("Images\Outdoor-Toy-Storage.jpg", cv.IMREAD_GRAYSCALE)
+
+    retval, thresh = cv.threshold(img, 200, 255, cv.THRESH_BINARY)
+    cv.imshow("Threshold", thresh)
+
+    cv.waitKey(0)
+    return None
+
 def video() -> None:
     capture = cv.VideoCapture(1)        # front cam
 
@@ -40,5 +51,7 @@ def video() -> None:
     capture.release()
     cv.destroyAllWindows()
 
+    return None
+
 if __name__ == "__main__":
-    image()
+    basic_thresh()
