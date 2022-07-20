@@ -1,6 +1,13 @@
 import cv2 as cv
 import matplotlib.pyplot as plt
 
+def rescale(frame: cv.Mat, scale: float) -> cv.Mat:
+    height = int(frame.shape[0] * scale)
+    width = int(frame.shape[1] * scale)
+    dim = (width, height)
+
+    return cv.resize(frame, dim, interpolation=cv.INTER_AREA)
+
 def image() -> None:
     img = cv.imread("Images\Outdoor-Toy-Storage.jpg")
     hsv_img = cv.cvtColor(img, cv.COLOR_BGR2HSV)                        # Convert image to HSV image
@@ -32,16 +39,29 @@ def basic_thresh() -> None:
     retval, thresh = cv.threshold(img, 200, 255, cv.THRESH_BINARY)
     
     plt.subplot(121)
-    plt.imshow(img), plt.title("Gray Scale")
+    plt.imshow(img, cmap="gray"), plt.title("Gray Scale")
     plt.xticks([]), plt.yticks([])
 
     plt.subplot(122)
-    plt.imshow(img), plt.title("Threshold")
+    plt.imshow(thresh, cmap="gray"), plt.title("Threshold")
     plt.xticks([]), plt.yticks([])
 
     plt.tight_layout()
     plt.show()
-    
+
+    return None
+
+def duck() -> None:
+    duck = cv.imread("Images\giant_duck.jpg")
+    duck_hsv = cv.cvtColor(duck, cv.COLOR_BGR2HSV)
+
+    min_val = (15, 100, 100)
+    max_val = (35, 255, 255)
+
+    duck_thresh = cv.inRange(duck_hsv, min_val, max_val)
+    cv.imshow("Duck Threshold", rescale(duck_thresh, 0.2))
+
+    cv.waitKey(0)
     return None
 
 def video() -> None:
@@ -63,4 +83,4 @@ def video() -> None:
     return None
 
 if __name__ == "__main__":
-    basic_thresh()
+    duck()
