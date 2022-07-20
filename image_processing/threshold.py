@@ -30,9 +30,18 @@ def basic_thresh() -> None:
     img = cv.imread("Images\Outdoor-Toy-Storage.jpg", cv.IMREAD_GRAYSCALE)
 
     retval, thresh = cv.threshold(img, 200, 255, cv.THRESH_BINARY)
-    cv.imshow("Threshold", thresh)
+    
+    plt.subplot(121)
+    plt.imshow(img), plt.title("Gray Scale")
+    plt.xticks([]), plt.yticks([])
 
-    cv.waitKey(0)
+    plt.subplot(122)
+    plt.imshow(img), plt.title("Threshold")
+    plt.xticks([]), plt.yticks([])
+
+    plt.tight_layout()
+    plt.show()
+    
     return None
 
 def video() -> None:
