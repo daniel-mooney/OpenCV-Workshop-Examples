@@ -24,7 +24,7 @@ def image() -> None:
     plt.xticks([]), plt.yticks([])
 
     plt.subplot(122)
-    plt.imshow(orange_thresh), plt.title("Orange Threshold")
+    plt.imshow(orange_thresh, cmap="gray"), plt.title("Orange Threshold")
     plt.xticks([]), plt.yticks([])
 
     plt.suptitle("Colour Thresholding")
@@ -83,4 +83,4 @@ def video() -> None:
     return None
 
 if __name__ == "__main__":
-    duck()
+    image()
