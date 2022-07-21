@@ -9,6 +9,8 @@ def rescale(img: cv.Mat, scale: float) -> cv.Mat:
 
 def main() -> None:
     img = cv.imread("..\Images\Beach.jpg")
+
+    rgb_img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
     hsv_img = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
     # Bounds for sand in HSV format
@@ -29,9 +31,21 @@ def main() -> None:
     sand_final_morph = rescale(sand_final_morph, scale_factor)
     img = rescale(img, scale_factor)
 
-    cv.imshow("Sand Threshold", sand_thresh)
-    cv.imshow("Morphological", sand_final_morph)
-    cv.imshow("Original", img)
+    plt.figure(0)
+    plt.subplot(121)
+    plt.imshow(rgb_img), plt.title("Original")
+    plt.xticks([]), plt.yticks([])
+
+    plt.subplot(122)
+    plt.imshow(sand_thresh, cmap="gray"), plt.title("Sand Threshold")
+    plt.xticks([]), plt.yticks([])
+
+    plt.figure(1)
+    plt.imshow(sand_final_morph, cmap="gray"), plt.title("Sand Thresholding with Closing Operation")
+    plt.xticks([]), plt.yticks([])
+
+    plt.tight_layout()
+    plt.show()
 
     cv.waitKey(0)
 
