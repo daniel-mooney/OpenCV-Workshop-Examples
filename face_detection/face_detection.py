@@ -23,7 +23,7 @@ def main() -> None:
 
     # Initialise cascade classifier object and load classifier file
     face_cascade = cv.CascadeClassifier()
-    success = face_cascade.load("face_detection\Classifier_files\haarcascade_frontalface_alt.xml")
+    success = face_cascade.load("face_detection\Classifier_files\haarcascade_frontalface_alt2.xml")
 
     if not success:
         print("Failed to open face cascade file")
