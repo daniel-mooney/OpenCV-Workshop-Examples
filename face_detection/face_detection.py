@@ -37,7 +37,7 @@ def main() -> None:
             break
 
         face_frame = detect_objects(frame, face_cascade)
-        
+
         cv.imshow("Face Detector", face_frame)
 
         if cv.waitKey(1) == ord('d'):

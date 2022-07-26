@@ -19,14 +19,18 @@ def canny_threshold_values(img: cv.Mat, deviation: float=0.33) -> tuple[float, f
     return minVal, maxVal
 
 def image() -> None:
-    garden = cv.imread("..\Images\Outdoor-Toy-Storage.jpg")
-    filtered_garden = cv.GaussianBlur(garden, (7, 7), 0)        # Filter noise using blur
+    img = cv.imread("../Images/dog.jpg")
+    img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
-    minVal, maxVal = canny_threshold_values(filtered_garden, 0.34)
-    canny = cv.Canny(filtered_garden, minVal, maxVal)
+    img_gray = cv.GaussianBlur(img_gray, (5,5), 0)
 
-    plt.subplot(121), plt.imshow(garden), plt.title("Original"), plt.xticks([]), plt.yticks([])
-    plt.subplot(122), plt.imshow(canny), plt.title("Canny"), plt.xticks([]), plt.yticks([])
+    minVal, maxVal = canny_threshold_values(img_gray)
+    canny = cv.Canny(img_gray, minVal, maxVal)
+
+    img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+
+    plt.subplot(121), plt.imshow(img_rgb), plt.title("Original"), plt.xticks([]), plt.yticks([])
+    plt.subplot(122), plt.imshow(canny, cmap="gray"), plt.title("Canny Edge Detector"), plt.xticks([]), plt.yticks([])
 
     plt.suptitle("Edge Detection")
     plt.tight_layout()
@@ -52,5 +56,5 @@ def video() -> None:
     cv.destroyAllWindows()
 
 if __name__ == "__main__":
-    # image()
-    video()
+    image()
+    # video()
