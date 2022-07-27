@@ -1,8 +1,16 @@
 import cv2 as cv
 
+def rescale(image: cv.Mat, scale: float) -> cv.Mat:
+    height = int(image.shape[:2] * scale)
+    width = int(image.shape[:2] * scale)
+
+    return cv.resize(image, (width, height), interpolation=cv.INTER_AREA)
+
 def main() -> None:
     file_path = "Videos\people_walking.mp4"
-    capture = cv.VideoCapture()
+    capture = cv.VideoCapture(file_path)
+
+    background_sub = cv.createBackgroundSubtractorKNN(detectShadows=False)
 
     while True:
         retval, frame = capture.read()
@@ -10,7 +18,9 @@ def main() -> None:
         if not retval:
             break
 
-        cv.imshow("People Walking", frame)
+        bg_mask = background_sub.apply(frame)
+
+        cv.imshow("People Walking", bg_mask)
 
         key = cv.waitKey(17)
         if key == ord('p'):
