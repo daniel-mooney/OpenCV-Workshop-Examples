@@ -3,14 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def canny_threshold_values(img: cv.Mat, deviation: float=0.33) -> tuple[float, float]:
-    """
-    Recommended values for deviation: 0.34 <= d <= 0.5. By default, deviation is set to 0.33.
-    Returns a tuple of (minVal, maxVal)
-    """
-    if len(img.shape) > 2:
-        img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-    
+def canny_threshold_values(img: cv.Mat, deviation: float=0.33) -> tuple[float, float]:   
     avgIntense = np.median(img)
 
     minVal = avgIntense * (1 - deviation)
