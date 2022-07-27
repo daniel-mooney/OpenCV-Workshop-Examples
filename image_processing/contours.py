@@ -45,9 +45,21 @@ def filter_contours(min_area: int, contours: list) -> list:
     
     return filtered_contours
 
+def draw_bounding_rectangles(image, contours) -> cv.Mat:
+    colour = (0,150, 100)
+    image_copy = image.copy()
+
+    for contour in contours:
+        x,y,w,h = cv.boundingRect(contour)
+        cv.rectangle(image_copy, (x,y), (x+w, y+h), colour, 2)
+    
+    return image_copy    
+
 def image() -> None:
-    img = cv.imread("Images/ball.jpg", cv.IMREAD_GRAYSCALE)
-    img_blurred = cv.GaussianBlur(img, (5,5), 0)
+    img = cv.imread("Images/ball.jpg")
+    img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+
+    img_blurred = cv.GaussianBlur(img_gray, (5,5), 0)
 
     min_val, max_val = canny_threshold_values(img_blurred)
     img_canny = cv.Canny(img_blurred, min_val, max_val)
@@ -56,8 +68,12 @@ def image() -> None:
 
     blank = np.zeros(img.shape[:2])
     img_contours = cv.drawContours(blank, contours, -1, (255,0,0), 2)
+    img_boundings = draw_bounding_rectangles(img, contours)
 
     cv.imshow("Contours", rescale(img_contours, 0.6))
+    cv.imshow("Bounding", rescale(img_boundings, 0.6))
+    print(len(contours))
+
     cv.waitKey(0)
 
 if __name__ == "__main__":
