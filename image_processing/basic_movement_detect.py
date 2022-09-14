@@ -21,7 +21,7 @@ def get_contours(image, min_area) -> list:
 
     return contours
 
-def draw_bounding_rect(image, contours) -> cv.Mat:
+def draw_bounding_rect(image: cv.Mat, contours: list) -> cv.Mat:
     image_copy = image.copy()
     colour = (0,255,0)
 
@@ -46,10 +46,11 @@ def main() -> None:
         bg_mask = background_sub.apply(frame)
         retval, bg_mask = cv.threshold(bg_mask, 200, 255, cv.THRESH_BINARY)
 
-        contours = get_contours(bg_mask, 1000)
+        contours = get_contours(bg_mask, min_area=750)
+        person_detect = draw_bounding_rect(frame, contours)
 
         cv.imshow("Background Mask", rescale(bg_mask, 0.7))
-        cv.imshow("People Walking", rescale(frame, 0.7))
+        cv.imshow("People Walking", rescale(person_detect, 0.7))
 
         key = cv.waitKey(17)
         if key == ord('p'):
